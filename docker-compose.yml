@@ -1,0 +1,48 @@
+name: api-ecommerce-stack
+
+services:
+  api-ecommerce:
+    build: .
+    container_name: api-ecommerce
+    env_file:
+      - .env
+    environment:
+      - PORT=3001
+      - BASE_API_URL=api
+      - CLIENT_URL=http://localhost:4001
+      - JWT_SECRET=update_your_JWT_secret
+      - MONGO_URI=mongodb://mongodb-user:mongodb-pass@mongodb:27017/db-ecommerce?authSource=admin
+    ports:
+      - '3001:3001'
+    command: [
+      'sh',
+      '-c',
+      'npm run seed:db hello@lebondeveloppeur.com admin123 && npm start'
+    ] # Default email and password arguments to database seed script - update your admin email and password
+    depends_on:
+      - mongodb
+    networks:
+      - api-ecommerce-network
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongodb-user
+      - MONGO_INITDB_ROOT_PASSWORD=mongodb-pass
+      - MONGO_INITDB_DATABASE=db-ecommerce
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-volume:/data/db
+    networks:
+      - api-ecommerce-network
+
+networks:
+  api-ecommerce-network:
+    driver: bridge
+
+
+volumes:
+  mongodb-volume:
