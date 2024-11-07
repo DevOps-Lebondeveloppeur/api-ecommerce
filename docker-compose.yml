@@ -10,7 +10,7 @@ services:
       - PORT=3001
       - BASE_API_URL=api
       - CLIENT_URL=http://localhost:4001
-      - JWT_SECRET=update_your_JWT_secret
+      - JWT_SECRET=I1eZOSzokm9OIz
       - MONGO_URI=mongodb://mongodb-user:mongodb-pass@mongodb:27017/db-ecommerce?authSource=admin
     ports:
       - '3001:3001'

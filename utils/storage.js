@@ -1,37 +1,26 @@
-const AWS = require('aws-sdk');
-
+const Minio = require('minio');
 const keys = require('../config/keys');
 
-exports.s3Upload = async image => {
+exports.s3Upload = async (image) => {
+  if (!keys.minio.accessKeyId || !image) {
+    console.warn('Missing MinIO keys or image');
+    return { imageUrl: '', imageKey: '' };
+  }
+
+  const minioClient = new Minio.Client({
+    endPoint: keys.minio.endpoint,
+    useSSL: true,
+    accessKey: keys.minio.accessKeyId,
+    secretKey: keys.minio.secretAccessKey,
+  });
+
+  const objectName = image.originalname;
+  const metaData = { 'Content-Type': image.mimetype };
+
   try {
-    let imageUrl = '';
-    let imageKey = '';
-
-    if (!keys.aws.accessKeyId) {
-      console.warn('Missing aws keys');
-    }
-
-    if (image) {
-      const s3bucket = new AWS.S3({
-        accessKeyId: keys.aws.accessKeyId,
-        secretAccessKey: keys.aws.secretAccessKey,
-        region: keys.aws.region
-      });
-
-      const params = {
-        Bucket: keys.aws.bucketName,
-        Key: image.originalname,
-        Body: image.buffer,
-        ContentType: image.mimetype
-      };
-
-      const s3Upload = await s3bucket.upload(params).promise();
-
-      imageUrl = s3Upload.Location;
-      imageKey = s3Upload.key;
-    }
-
-    return { imageUrl, imageKey };
+    await minioClient.putObject(keys.minio.bucketName, objectName, image.buffer, metaData);
+    const imageUrl = `https://${keys.minio.endpoint}/${keys.minio.bucketName}/${objectName}`;
+    return { imageUrl, imageKey: objectName };
   } catch (error) {
     return { imageUrl: '', imageKey: '' };
   }
