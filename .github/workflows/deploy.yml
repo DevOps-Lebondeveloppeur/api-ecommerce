@@ -59,3 +59,5 @@ jobs:
               cd /home/ubuntu/devops-ecommerce/api
               sudo git pull
               sudo docker compose pull
+              sudo docker compose up -d
+
