@@ -8,7 +8,7 @@ const api = `/${apiURL}`;
 
 // Welcome route
 router.get('/', (req, res) => {
-    res.json({ message: 'Welcome to the API (api.lebondeveloppeur.net) !' });
+    res.json({ message: 'Welcome to the API !' });
 });
 
   
