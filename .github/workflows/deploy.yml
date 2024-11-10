@@ -1,4 +1,4 @@
-name:  CI/CD api-ecommerce
+name:  CI/CD api-ecommerce.
 
 env:
   BUILD_NUMBER: ${{ github.run_number }}
