@@ -6,6 +6,12 @@ const { apiURL } = keys.app;
 
 const api = `/${apiURL}`;
 
+// Welcome route
+router.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the API (api.lebondeveloppeur.net) !' });
+});
+
+  
 // api routes
 router.use(api, apiRoutes);
 router.use(api, (req, res) => res.status(404).json('No API route found'));
