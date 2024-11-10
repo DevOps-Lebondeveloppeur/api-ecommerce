@@ -2,7 +2,7 @@ name:  CI/CD api-ecommerce.
 
 env:
   BUILD_NUMBER: ${{ github.run_number }}
-  IMAGE_NAME: api-ecommerce-image
+  IMAGE_NAME: api-ecommerce
 
 on:
   push:
