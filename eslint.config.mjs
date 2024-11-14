@@ -5,21 +5,21 @@ import pluginJs from "@eslint/js";
 export default [
   {
     files: ["**/*.js"],
-    languageOptions: {
-      sourceType: "commonjs", // Use CommonJS syntax
-      globals: {
-        ...globals.node, // Allow Node.js globals like 'process' and 'require'
-      },
-    },
+    languageOptions: { sourceType: "commonjs" },
     rules: {
-      // Turn all errors into warnings
-      "no-unused-vars": "warn", // Change 'no-unused-vars' to a warning
-      "no-console": "warn", // Example: Change 'no-console' to a warning
-      "eqeqeq": "warn", // Example: Change 'eqeqeq' (strict equality) to a warning
-      "semi": "warn", // Example: Change 'semi' rule to a warning
-      "curly": "warn", // Example: Change 'curly' rule to a warning
-      // Add other rules as needed
+      "no-unused-vars": "warn",  // Treat 'no-unused-vars' errors as warnings
+      "no-console": "warn",      // Treat 'no-console' errors as warnings
+      "no-undef": "warn",        // Treat 'no-undef' errors as warnings
+      // Add other rules you want to treat as warnings here
     },
   },
-  pluginJs.configs.recommended, // Apply recommended ESLint JavaScript rules
+  {
+    languageOptions: { globals: globals.browser },
+    rules: {
+      "no-unused-vars": "warn",
+      "no-console": "warn",
+      "no-undef": "warn",
+    },
+  },
+  pluginJs.configs.recommended, // Keep recommended settings, but override as needed
 ];

@@ -237,7 +237,7 @@ const deactivateMerchant = async brandId => {
     'merchant',
     '_id'
   );
-  if (!brandDoc || !brandDoc.merchant) return;
+  if (!brandDoc || !brandDoc.merchant) {return;}
   const merchantId = brandDoc.merchant._id;
   const query = { _id: merchantId };
   const update = {

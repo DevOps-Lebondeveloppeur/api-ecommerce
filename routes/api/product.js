@@ -217,9 +217,9 @@ router.post(
         return res.status(400).json({ error: 'This sku is already in use.' });
       }
 
-      console.log("image=",image)
+      console.log("image=",image);
       const { imageUrl, imageKey } = await s3Upload(image);
-      console.log("output=", { imageUrl, imageKey })
+      console.log("output=", { imageUrl, imageKey });
       const product = new Product({
         sku,
         name,
