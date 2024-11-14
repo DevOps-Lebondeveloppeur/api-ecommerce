@@ -10,7 +10,6 @@ on:
       - main
 
 jobs:
-
   test-job:
     runs-on: ubuntu-latest
     steps:
@@ -27,6 +26,9 @@ jobs:
 
       - name: Run unit tests
         run: npm test
+
+      - name: Run ESLint for static code analysis
+        run: npm run lint # Make sure you have ESLint configured in your project
 
   trivy-code-scanner-job:
     runs-on: ubuntu-latest
