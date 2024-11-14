@@ -13,8 +13,8 @@ router.get('/', (req, res) => {
 
 
 // Test route
-router.get('/', (req, res) => {
-  res.json({ message: 'Test route' });
+router.get('/test', (req, res) => {
+  res.json({ message: 'Welcome to the API !' });
 });
 
 
