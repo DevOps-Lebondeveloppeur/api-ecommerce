@@ -39,19 +39,14 @@ jobs:
       - name: Build Docker image
         run: docker build -t ${{ env.IMAGE_NAME }} .
 
-      - name: Install Trivy
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://github.com/aquasecurity/trivy/releases/download/v0.43.0/trivy_0.43.0_Linux-x86_64.tar.gz
-          tar zxvf trivy_0.43.0_Linux-x86_64.tar.gz
-          sudo mv trivy /usr/local/bin/
-          trivy --version
-
       - name: Run Trivy security scan
-        run: |
-          trivy image --no-progress --exit-code 1 --severity HIGH,CRITICAL ${{ env.IMAGE_NAME }}
-        continue-on-error: false  # Fail the pipeline if vulnerabilities are found
+        uses: aquasecurity/trivy-action@v0.28.0
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          severity: HIGH,CRITICAL
+          exit-code: 1  # Fail the pipeline if vulnerabilities are found
+          ignore-unfixed: false
+          no-progress: true
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
