@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const router = require('./index'); e
+const router = require('./index');
 
 const app = express();
 app.use(router);
