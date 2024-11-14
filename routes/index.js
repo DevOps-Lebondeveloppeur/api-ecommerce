@@ -11,6 +11,13 @@ router.get('/', (req, res) => {
     res.json({ message: 'Welcome to the API !' });
 });
 
+
+// Test route
+router.get('/', (req, res) => {
+  res.json({ message: 'Test route' });
+});
+
+
 // Health check endpoint
 router.get("/health", async (req, res) => {
     try {
