@@ -31,6 +31,7 @@ jobs:
     
   trivy-code-scanner-job:
     runs-on: ubuntu-latest
+    needs: test-job
     steps:
       - name: Clone Source Code
         uses: actions/checkout@v4
@@ -43,7 +44,7 @@ jobs:
 
   build-and-push-job:
     runs-on: ubuntu-latest
-    needs: test-job
+    needs: trivy-code-scanner-job
     steps:
 
       - name: Clone Source Code
