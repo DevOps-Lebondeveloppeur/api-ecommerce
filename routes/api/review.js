@@ -24,6 +24,7 @@ router.post('/add', auth, async (req, res) => {
       review: reviewDoc
     });
   } catch (error) {
+    console.log(error)
     return res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -58,6 +59,7 @@ router.get('/', async (req, res) => {
       count
     });
   } catch (error) {
+    console.log(error)
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -91,6 +93,7 @@ router.get('/:slug', async (req, res) => {
       reviews
     });
   } catch (error) {
+    console.log(error)
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -112,6 +115,7 @@ router.put('/:id', async (req, res) => {
       message: 'review has been updated successfully!'
     });
   } catch (error) {
+    console.log(error)
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -137,6 +141,7 @@ router.put('/approve/:reviewId', auth, async (req, res) => {
       success: true
     });
   } catch (error) {
+    console.log(error)
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -177,6 +182,7 @@ router.delete('/delete/:id', async (req, res) => {
       review
     });
   } catch (error) {
+    console.log(error)
     return res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
