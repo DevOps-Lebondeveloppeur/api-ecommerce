@@ -41,8 +41,12 @@ jobs:
 
       - name: Install Trivy
         run: |
-          curl -sSL https://github.com/aquasecurity/trivy/releases/download/v0.43.0/trivy_0.43.0_Linux-x86_64.deb -o trivy.deb
-          sudo dpkg -i trivy.deb
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.43.0/trivy_0.43.0_Linux-x86_64.tar.gz
+          tar zxvf trivy_0.43.0_Linux-x86_64.tar.gz
+          sudo mv trivy /usr/local/bin/
+          trivy --version
 
       - name: Run Trivy security scan
         run: |
