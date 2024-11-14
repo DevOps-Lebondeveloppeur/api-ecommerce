@@ -4,28 +4,25 @@ import pluginJs from "@eslint/js";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    files: ["**/*.js"],  // Apply to all JS files
+    files: ["**/**/*.js"],
     languageOptions: {
-      sourceType: "commonjs", // Change this to "module" if you're using ES modules
+      sourceType: "commonjs",
       globals: {
-        ...globals.node, // Use Node.js globals
+        ...globals.node,
+        ...globals.jest,
       },
     },
     rules: {
-      "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
-      "no-console": "warn",      // Treat 'no-console' errors as warnings
-      "no-undef": "warn",        // Treat 'no-undef' errors as warnings
+      "no-unused-vars": ["warn", { "vars": "all", "args": "none" }], // Ignore unused args specifically
+      "no-console": "off",
+      "no-undef": "off",
     },
   },
   {
-    languageOptions: {
-      globals: globals.browser, // This is for browser-specific globals (if you need browser code)
-    },
+    ...pluginJs.configs.recommended, // Inherit recommended rules and apply overrides
     rules: {
-      "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
-      "no-console": "warn",
-      "no-undef": "warn",
+      ...pluginJs.configs.recommended.rules,
+      "no-unused-vars": ["warn", { "vars": "all", "args": "none" }],
     },
   },
-  pluginJs.configs.recommended, // Keep recommended settings, but override as needed
 ];

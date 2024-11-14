@@ -68,6 +68,7 @@ exports.caculateTaxAmount = order => {
     order.totalWithTax = parseFloat(Number(order.totalWithTax.toFixed(2)));
     return order;
   } catch (error) {
+    console.log(error)
     return order;
   }
 };

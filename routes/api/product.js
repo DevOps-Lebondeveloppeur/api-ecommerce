@@ -242,8 +242,7 @@ router.post(
       });
     } catch (error) {
       return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
-        error
+        error: 'Your request could not be processed. Please try again.'
       });
     }
   }
