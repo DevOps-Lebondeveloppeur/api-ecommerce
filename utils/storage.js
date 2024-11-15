@@ -22,6 +22,7 @@ exports.s3Upload = async (image) => {
     const imageUrl = `https://${keys.minio.endpoint}/${keys.minio.bucketName}/${objectName}`;
     return { imageUrl, imageKey: objectName };
   } catch (error) {
+    console.log("error=",error)
     return { imageUrl: '', imageKey: '' };
   }
 };
