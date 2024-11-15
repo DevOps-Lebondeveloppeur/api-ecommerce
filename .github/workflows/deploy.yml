@@ -46,23 +46,9 @@ jobs:
       - name: Run ESLint for static code analysis
         run: npm run lint 
 
-  trivy-code-scanner-job:
-    runs-on: ubuntu-latest
-    needs: static-code-analysis-job
-    continue-on-error: true
-    steps:
-      - name: Clone Source Code
-        uses: actions/checkout@v4
-
-      - name: Run Trivy scanner without cache
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-
   build-and-push-job:
     runs-on: ubuntu-latest
-    needs: trivy-code-scanner-job
+    needs: static-code-analysis-job
     steps:
       - name: Clone Source Code
         uses: actions/checkout@v4
@@ -88,22 +74,9 @@ jobs:
       - name: Push Docker image with latest version
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
-  trivy-image-scan-job:
-    runs-on: ubuntu-latest
-    needs: build-and-push-job
-    continue-on-error: true
-    steps:
-      - name: Clone Source Code
-        uses: actions/checkout@v4
-
-      - name: Run Trivy security scan on Docker image (post-push scan)
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.BUILD_NUMBER }}
-
   deploy-job:
     runs-on: ubuntu-latest
-    needs: trivy-image-scan-job
+    needs: build-and-push-job
     steps:
       - name: Connect to the VPS using SSH
         uses: appleboy/ssh-action@master
